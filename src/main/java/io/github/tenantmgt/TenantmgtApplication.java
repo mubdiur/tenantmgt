@@ -9,5 +9,4 @@ public class TenantmgtApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TenantmgtApplication.class, args);
 	}
-
 }
