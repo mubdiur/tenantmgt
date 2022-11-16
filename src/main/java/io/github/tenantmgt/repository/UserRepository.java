@@ -8,4 +8,5 @@ import io.github.tenantmgt.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
+    User updateUser(User user);
 }

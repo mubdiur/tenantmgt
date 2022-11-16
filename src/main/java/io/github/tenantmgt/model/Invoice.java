@@ -1,6 +1,6 @@
 package io.github.tenantmgt.model;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -24,13 +24,14 @@ import lombok.NoArgsConstructor;
 public class Invoice {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String title;
     private boolean isPaid;
     @ManyToOne(fetch = FetchType.EAGER)
     private User issuedBy;
     @ManyToOne(fetch = FetchType.EAGER)
     private User issuedTo;
-    private LocalDateTime issueDate;
-    private LocalDateTime dueDate;
+    private ZonedDateTime issueDate;
+    private ZonedDateTime dueDate;
     @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Bill> bills = new ArrayList<>();
