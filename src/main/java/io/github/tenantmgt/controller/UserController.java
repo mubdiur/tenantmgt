@@ -50,20 +50,27 @@ public class UserController {
     private final UserServiceInterface userService;
     private static final String APPLICATION_JSON_VALUE = "application/json";
 
-    @GetMapping("/admin/user/")
+    @GetMapping("/admin/user")
     public ResponseEntity<User> getUser(@RequestParam String username) {
         return ResponseEntity.ok().body(userService.getUser(username));
     }
 
     @PostMapping("/admin/user/save")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/user/save").toUriString());
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/register").toUriString());
+        return ResponseEntity.created(uri).body(userService.saveUser(user));
+    }
+
+
     @PostMapping("/admin/role/save")
     public ResponseEntity<Role> saveRole(@RequestBody Role role) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/role/save").toUriString());
         return ResponseEntity.created(uri).body(userService.saveRole(role));
     }
 
@@ -96,7 +103,7 @@ public class UserController {
                         .sign(algorithm);
 
 
-                log.info("Login was successful");
+                log.info("Token refresh was successful");
 
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);

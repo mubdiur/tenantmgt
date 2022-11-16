@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import static javax.persistence.FetchType.*;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -27,6 +26,10 @@ public class User {
     private String name;
     private String username;
     private String password;
+    private String email;
+    private String phone;
+    private String nationalID;
+    private String passportNumber;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Role> roles = new ArrayList<>();

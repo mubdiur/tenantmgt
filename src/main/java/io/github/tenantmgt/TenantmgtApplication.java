@@ -31,18 +31,22 @@ public class TenantmgtApplication {
 			userService.saveRole(new Role(null, "ROLE_TENANT"));
 			userService.saveRole(new Role(null, "ROLE_OWNER"));
 			userService.saveRole(new Role(null, "ROLE_MANAGER"));
+			userService.saveRole(new Role(null, "ROLE_USER"));
+			userService.saveRole(new Role(null, "ROLE_ADMIN"));
 
 			userService.saveUser(
-				new User(
-					null,
-					"Md. Mubdiur Rahman",
-					"mubdiur",
-					"1234",
-					new ArrayList<>()
-				)
-			);
+					new User(
+							null,
+							"Md. Mubdiur Rahman",
+							"mubdiur",
+							"1234",
+							"mubdiur@gmail.com",
+							"+8801232837298",
+							"38947398473898",
+							"387483748",
+							new ArrayList<>()));
 
-			userService.addRoleToUser("mubdiur", "ROLE_TENANT");
+			userService.addRoleToUser("mubdiur", "ROLE_ADMIN");
 		};
 	}
 }
