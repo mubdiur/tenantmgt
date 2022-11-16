@@ -1,15 +1,16 @@
 package io.github.tenantmgt.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import static javax.persistence.FetchType.*;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
@@ -19,15 +20,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Entity() @Table(name = "usertable") @Data @NoArgsConstructor @AllArgsConstructor
-public class User {
+@Entity() @Table(name = "invoicetable") @Data @NoArgsConstructor @AllArgsConstructor
+public class Invoice {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    private String username;
-    private String password;
-    @ManyToMany
+    private boolean isPaid;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User issuedBy;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User issuedTo;
+    private LocalDateTime issueDate;
+    private LocalDateTime dueDate;
+    @OneToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<Role> roles = new ArrayList<>();
+    private Collection<Bill> bills = new ArrayList<>();
+
 }

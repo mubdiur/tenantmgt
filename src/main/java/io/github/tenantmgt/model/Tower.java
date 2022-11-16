@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import static javax.persistence.FetchType.*;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
@@ -19,15 +20,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Entity() @Table(name = "usertable") @Data @NoArgsConstructor @AllArgsConstructor
-public class User {
+@Entity() @Table(name = "towertable") @Data @NoArgsConstructor @AllArgsConstructor
+public class Tower {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String username;
-    private String password;
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<Role> roles = new ArrayList<>();
+    private Collection<User> owners = new ArrayList<>();
+	@OneToOne(fetch = FetchType.EAGER)
+    private User manager;
+	@OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Collection<Floor> floors = new ArrayList<>();
+    private String address;
 }
