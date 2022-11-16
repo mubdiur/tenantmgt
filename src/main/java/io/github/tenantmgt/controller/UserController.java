@@ -13,7 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.github.tenantmgt.model.Role;
 import io.github.tenantmgt.model.User;
-import io.github.tenantmgt.service.UserService;
+import io.github.tenantmgt.service.UserServiceInterface;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 
 public class UserController {
-    private final UserService userService;
+    private final UserServiceInterface userService;
 
     @GetMapping("/user")
     public ResponseEntity<User> getUser(@RequestParam String username) {
