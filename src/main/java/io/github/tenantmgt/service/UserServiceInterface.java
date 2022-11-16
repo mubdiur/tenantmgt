@@ -1,6 +1,5 @@
 package io.github.tenantmgt.service;
 
-import org.springframework.stereotype.Service;
 
 import io.github.tenantmgt.model.Role;
 import io.github.tenantmgt.model.User;
