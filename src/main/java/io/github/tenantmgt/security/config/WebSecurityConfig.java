@@ -51,8 +51,8 @@ public class WebSecurityConfig {
         customAuthenticationFilter.setFilterProcessesUrl("/api/login/**");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/api/login/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/register/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/login/**", "/api/register/**", "/api/token/refresh/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/user/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().antMatchers("/api/tenant/**").hasAnyAuthority("ROLE_TENANT");
         http.authorizeRequests().antMatchers("/api/admin/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers("/api/owner/**").hasAnyAuthority("ROLE_OWNER");
