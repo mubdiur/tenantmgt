@@ -1,4 +1,4 @@
-package io.github.tenantmgt.service;
+package io.github.tenantmgt.serviceinterface;
 
 
 import io.github.tenantmgt.model.Role;

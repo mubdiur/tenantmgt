@@ -15,6 +15,7 @@ import io.github.tenantmgt.model.Role;
 import io.github.tenantmgt.model.User;
 import io.github.tenantmgt.repository.RoleRepository;
 import io.github.tenantmgt.repository.UserRepository;
+import io.github.tenantmgt.serviceinterface.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 @Service @RequiredArgsConstructor @Transactional @Slf4j

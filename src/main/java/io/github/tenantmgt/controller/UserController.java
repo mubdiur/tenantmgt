@@ -31,7 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.github.tenantmgt.model.Role;
 import io.github.tenantmgt.model.User;
-import io.github.tenantmgt.service.UserServiceInterface;
+import io.github.tenantmgt.serviceinterface.UserServiceInterface;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
