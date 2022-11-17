@@ -8,6 +8,6 @@ import io.github.tenantmgt.model.Floor;
 
 @Repository
 public interface FloorRepository extends JpaRepository<Floor, Long> {
-    @Query("SELECT floor_id FROM floortable_apartments t WHERE t.apartments_id = ?1")
+    @Query(value = "SELECT floor_id FROM floortable_apartments t WHERE t.apartments_id = ?1", nativeQuery = true)
     public Long getTenantFloorID(Long apartmentId);
 }

@@ -25,8 +25,7 @@ import io.github.tenantmgt.repository.TowerRepository;
 import io.github.tenantmgt.repository.UserRepository;
 import io.github.tenantmgt.serviceinterface.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-@Service @RequiredArgsConstructor @Transactional @Slf4j
+@Service @RequiredArgsConstructor @Transactional
 public class UserService implements UserServiceInterface, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -62,7 +61,6 @@ public class UserService implements UserServiceInterface, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("load user by username has been called in userservice");
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("Username was not found");

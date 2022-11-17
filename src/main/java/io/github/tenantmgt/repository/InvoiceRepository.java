@@ -10,6 +10,6 @@ import io.github.tenantmgt.model.Invoice;
 
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
-    @Query("SELECT * FROM invoicetable t WHERE t.issued_to_id = ?1")
+    @Query(value="SELECT * FROM invoicetable t WHERE t.issued_to_id = ?1", nativeQuery = true)
     public Collection<Invoice> getTenantInvoices(Long userid);
 }

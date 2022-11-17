@@ -22,7 +22,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -40,9 +39,19 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = "", password = "";
+        try {
+            // BufferedReader reader = request.getReader();
+            // Gson gson = new Gson();
+            // LoginRequest loginRequest = gson.fromJson(reader, LoginRequest.class);
+            // username = loginRequest.getUsername();
+            // password = loginRequest.getPassword();
 
+            String requestString = request.getReader().lines().toArray().toString();
+            log.info("Requesttttt: {}", requestString);
+        } catch (IOException e) {
+            log.error("Error reading json");
+        }
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
                 password);
         return authenticationManager.authenticate(authenticationToken);
@@ -53,13 +62,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             Authentication authResult) throws IOException, ServletException {
         User user = (User) authResult.getPrincipal();
 
-        if (jwtSecret== null) {
+        if (jwtSecret == null) {
             throw new IOException("Secret key 'jwt.secret' not found");
         }
         Algorithm algorithm = Algorithm.HMAC256(jwtSecret.getBytes());
 
-
-        final String access_token = JWT.create()
+        final String accessToken = JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)) // 10 minutes
                 .withIssuer(request.getRequestURI().toString())
@@ -68,7 +76,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                         user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
-        final String refresh_token = JWT.create()
+        final String refreshToken = JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 30L * 24 * 60 * 60 * 1000)) // 30 days
                 .withIssuer(request.getRequestURI().toString())
@@ -77,9 +85,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         log.info("Login was successful");
 
         Map<String, String> tokens = new HashMap<>();
-        tokens.put("access_token", access_token);
-        tokens.put("refresh_token", refresh_token);
+        tokens.put("accessToken", accessToken);
+        tokens.put("refreshToken", refreshToken);
         response.setContentType(APPLICATION_JSON_VALUE);
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setStatus(200);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 
     }
@@ -88,9 +98,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException failed) throws IOException, ServletException {
         log.error("login error: {}", failed.getMessage());
-        super.unsuccessfulAuthentication(request, response, failed);
+        response.sendError(200, failed.getMessage());
     }
-
-    
 
 }

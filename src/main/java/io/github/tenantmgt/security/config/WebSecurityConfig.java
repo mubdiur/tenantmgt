@@ -12,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import io.github.tenantmgt.security.auth.filter.CustomAuthenticationFilter;
 import io.github.tenantmgt.security.auth.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +25,6 @@ public class WebSecurityConfig {
 
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final AuthenticationManagerBuilder authManagerBuilder;
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
@@ -44,11 +41,10 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // http.authorizeRequests().anyRequest().permitAll();
-        CustomAuthenticationFilter customAuthenticationFilter = 
-                new CustomAuthenticationFilter(authManagerBuilder.getOrBuild(), jwtSecret);
-        
-        customAuthenticationFilter.setFilterProcessesUrl("/api/login/**");
+        // CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(
+        //         authManagerBuilder.getOrBuild(), jwtSecret);
+
+        // customAuthenticationFilter.setFilterProcessesUrl("/api/login/**");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/api/login/**", "/api/register/**", "/api/token/refresh/**").permitAll();
@@ -59,9 +55,11 @@ public class WebSecurityConfig {
         http.authorizeRequests().antMatchers("/api/manager/**").hasAnyAuthority("ROLE_MANAGER");
         http.authorizeRequests().anyRequest().authenticated();
 
-        http.addFilter(customAuthenticationFilter);
+        // http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(jwtSecret), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
+
 }
