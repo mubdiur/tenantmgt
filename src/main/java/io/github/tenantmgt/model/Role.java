@@ -3,6 +3,8 @@ package io.github.tenantmgt.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.*;
+
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 

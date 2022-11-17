@@ -3,6 +3,8 @@ package io.github.tenantmgt.controller;
 import java.io.IOException;
 import java.net.URI;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -114,7 +116,10 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/register").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveUser(user));
+        user.setRoles(new ArrayList<>());
+        User savedUser = userService.saveUser(user);
+        userService.addRoleToUser(savedUser.getUsername(), "ROLE_USER");
+        return ResponseEntity.created(uri).body(savedUser);
     }
 
     @PostMapping("/admin/role/save")

@@ -39,7 +39,7 @@ public class TenantmgtApplication {
 					new User(
 							null,
 							"Md. Mubdiur Rahman",
-							"mubdiur",
+							"AdminUser",
 							"1234",
 							"mubdiur@gmail.com",
 							"+8801232837298",
@@ -47,7 +47,67 @@ public class TenantmgtApplication {
 							"387483748",
 							new ArrayList<>()));
 
-			userService.addRoleToUser("mubdiur", "ROLE_ADMIN");
+			userService.addRoleToUser("AdminUser", "ROLE_USER");
+			userService.addRoleToUser("AdminUser", "ROLE_ADMIN");
+
+			userService.saveUser(
+					new User(
+							null,
+							"Md. Mubdiur Rahman",
+							"NormalUser",
+							"1234",
+							"mubdiur@gmail.com",
+							"+8801232837298",
+							"38947398473898",
+							"387483748",
+							new ArrayList<>()));
+
+			userService.addRoleToUser("NormalUser", "ROLE_USER");
+
+			userService.saveUser(
+					new User(
+							null,
+							"Md. Mubdiur Rahman",
+							"TenantUser",
+							"1234",
+							"mubdiur@gmail.com",
+							"+8801232837298",
+							"38947398473898",
+							"387483748",
+							new ArrayList<>()));
+
+			userService.addRoleToUser("TenantUser", "ROLE_USER");
+			userService.addRoleToUser("TenantUser", "ROLE_TENANT");
+
+			userService.saveUser(
+					new User(
+							null,
+							"Md. Mubdiur Rahman",
+							"ManagerUser",
+							"1234",
+							"mubdiur@gmail.com",
+							"+8801232837298",
+							"38947398473898",
+							"387483748",
+							new ArrayList<>()));
+
+			userService.addRoleToUser("ManagerUser", "ROLE_USER");
+			userService.addRoleToUser("ManagerUser", "ROLE_MANAGER");
+
+			userService.saveUser(
+					new User(
+							null,
+							"Md. Mubdiur Rahman",
+							"OwnerUser",
+							"1234",
+							"mubdiur@gmail.com",
+							"+8801232837298",
+							"38947398473898",
+							"387483748",
+							new ArrayList<>()));
+
+			userService.addRoleToUser("OwnerUser", "ROLE_USER");
+			userService.addRoleToUser("OwnerUser", "ROLE_OWNER");
 		};
 	}
 }

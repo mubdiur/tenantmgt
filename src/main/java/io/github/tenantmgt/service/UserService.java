@@ -106,6 +106,5 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         Tower tower = towerRepository.findById(towerId).get();
         return tower;
     }
-
     
 }
