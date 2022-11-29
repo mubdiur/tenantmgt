@@ -54,7 +54,6 @@ public class UserController {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-
     private final UserServiceInterface userService;
     private static final String APPLICATION_JSON_VALUE = "application/json";
     private final PasswordEncoder passwordEncoder;
@@ -64,7 +63,6 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUser(username));
     }
 
-    
     @PostMapping("/admin/user/save")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         URI uri = URI.create(
@@ -111,10 +109,14 @@ public class UserController {
         }
     }
 
-    
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/register").toUriString());
+        URI uri = URI
+                .create(ServletUriComponentsBuilder
+                        .fromCurrentContextPath()
+                        .path("/api/register")
+                        .toUriString());
+
         user.setRoles(new ArrayList<>());
         User savedUser = userService.saveUser(user);
         userService.addRoleToUser(savedUser.getUsername(), "ROLE_USER");

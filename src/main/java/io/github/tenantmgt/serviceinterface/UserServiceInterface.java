@@ -21,9 +21,9 @@ public interface UserServiceInterface {
     Apartment getTenantApartment(String username);
 
     Collection<Invoice> getTenantInvoices(String username);
-    
+
     Floor getTenantFloor(String username);
 
     Tower getTenantTower(String username);
-    
+
 }

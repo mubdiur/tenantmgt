@@ -66,7 +66,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
             throw new UsernameNotFoundException("Username was not found");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> { 
+        user.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         });
 
@@ -106,5 +106,5 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         Tower tower = towerRepository.findById(towerId).get();
         return tower;
     }
-    
+
 }
